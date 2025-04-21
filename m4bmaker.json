@@ -1,0 +1,45 @@
+{
+  "path": "~/path/to/your/audio/files",
+  "title": "Audiobook Title",
+  "author": "Author (maps to Artist & Album Artist)",
+  "narrator": "Narrator (maps to Composer)",
+  "genre": "Audiobook",
+  "disc": "1",
+  "total_discs": "1",
+  "year": "2025",
+  "cover": "cover.jpg (leave empty if not available)",
+  "tracks": [
+    {
+      "title": "Track title (leave empty to auto-generate)",
+      "file": "Output file name (must be .m4b, leave empty to auto-generate)",
+      "chapters": [
+        {
+          "title": "Chapter title (leave empty to auto-generate)",
+          "files": [
+            "Name of the first audio file.mp3",
+            "Name of the second audio file.mp3"
+          ]
+        },
+        {
+          "title": "Chapter 2",
+          "files": [
+            "Name of the first audio file.mp3"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Track 2",
+      "file": "02 Track 2.m4b",
+      "chapters": [
+        {
+          "title": "Chapter 3",
+          "files": [
+            "Name of the fourth audio file.mp3",
+            "Name of the fifth audio file.mp3"
+          ]
+        }
+      ]
+    }
+  ]
+}

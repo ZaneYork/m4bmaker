@@ -20,7 +20,7 @@ class M4BMaker:
 
     def __init__(
         self,
-        json_path: Path = Path.cwd() / "audiobook.json",
+        json_path: Path = Path.cwd() / "m4bmaker.json",
         mode: Literal["json", "single", "chapter"] = "json",
         output_bitrate: Literal["64k", "128k"] = "64k",
         log_path: Path = Path.cwd() / "m4bmaker.log",
