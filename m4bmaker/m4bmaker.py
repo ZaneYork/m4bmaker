@@ -34,7 +34,7 @@ class M4BMaker:
             self.json_path = Path(json_path)
             with open(self.json_path, "r", encoding="utf8") as f:
                 self._raw_data = json.load(f)
-            self.mode = self.MODES[mode.lower()]
+            self.mode = self.MODES[mode.lower()].name
             self.output_bitrate = self.AUDIO_BITRATES[output_bitrate.lower()].name
         except FileNotFoundError as exc:
             raise LoggedFileError(f"JSON file not found: {json_path}", self.lg) from exc
@@ -43,7 +43,7 @@ class M4BMaker:
         except KeyError as exc:
             raise LoggedValueError(f"Invalid mode or bitrate: {exc}", self.lg) from exc
 
-        self.lg.info(f"Selected mode: {self.mode.name}")
+        self.lg.info(f"Selected mode: {self.mode}")
         self.lg.info(f"Selected output bitrate: {self.output_bitrate}")
         self.lg.debug(f"Loaded JSON data:\n{json.dumps(self._raw_data, indent=2)}")
 
@@ -53,9 +53,9 @@ class M4BMaker:
 
         self.output_path = self.path / "output"
         self.tracks = {
-            self.MODES.json: self._prep_tracks_json_mode,
-            self.MODES.single: self._prep_tracks_single_mode,
-            self.MODES.chapter: self._prep_tracks_chapter_mode,
+            self.MODES.json.name: self._prep_tracks_json_mode,
+            self.MODES.single.name: self._prep_tracks_single_mode,
+            self.MODES.chapter.name: self._prep_tracks_chapter_mode,
         }[self.mode]()
         self._validate_tracks()
 
@@ -63,6 +63,9 @@ class M4BMaker:
 
         self.lg.info("Data validation & preparation complete.")
         self.lg.debug(f"Processed data:\n{json.dumps(self.to_dict(), indent=2)}")
+
+    def __del__(self) -> None:
+        self.lg.info("Goodbye!")
 
     def _cleaner(self, string: str) -> str:
         cleaned = string.translate(str.maketrans("", "", self.ILLEGAL_CHARS))
@@ -240,6 +243,8 @@ class M4BMaker:
         return {
             "path": str(self.path),
             "output_path": str(self.output_path),
+            "mode": self.mode,
+            "output_bitrate": self.output_bitrate,
             "title": self.title,
             "author": self.author,
             "narrator": self.narrator,
@@ -295,7 +300,8 @@ class M4BMaker:
                 self.lg.debug(f"Temporary file removed: {temp_file}")
 
     def convert(self) -> None:
-        self.lg.debug("Started converting files.")
+        self.lg.info("Started converting files.")
+        self.lg.info(f"mode: {self.mode}, output_bitrate: {self.output_bitrate}")
         common_args = ["-loglevel", "info", "-hide_banner", "-y", "-stats"]
         codec_args = ["-c" if self._input_format == ".mp3" else "-c:v", "copy"]
         # if input files are mp3, we just copy all streams to the output file which is
