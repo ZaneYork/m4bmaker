@@ -1,0 +1,8 @@
+[project]
+name = "m4bmaker"
+version = "0.1.0"
+description = "Creates .m4b audiobooks from .mp3/.m4a files using ffmpeg."
+readme = "README.md"
+requires-python = ">=3.13"
+license = "MIT"
+dependencies = []
