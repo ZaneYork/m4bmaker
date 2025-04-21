@@ -1,6 +1,6 @@
-# M4BMaker
+# m4bmaker
 
-`M4BMaker` is a Python tool for creating `.m4b` audiobooks from audio tracks usinf [ffmpeg](https://www.ffmpeg.org/). It supports organizing tracks and chapters, adding metadata, and embedding cover images.
+`m4bmaker` is a Python tool for creating `.m4b` audiobooks from audio tracks usinf [ffmpeg](https://www.ffmpeg.org/). It supports organizing tracks and chapters, adding metadata, and embedding cover images.
 
 ## Features
 
@@ -29,7 +29,7 @@
 
 ### JSON Configuration
 
-`M4BMaker` uses a JSON configuration file to define the audiobook's structure, metadata, and input files. Below is an example configuration:
+`m4bmaker` uses a JSON configuration file to define the audiobook's structure, metadata, and input files. Below is an example configuration:
 
 ```json
 {
@@ -70,7 +70,7 @@ This assumes that all the audio files and the `cover.jpg` file are located in th
 
 ### Running the Tool
 
-To create an audiobook, first create a config JSON file using the above template and then instantiate the `M4BMaker` class and call its `convert` method:
+To create an audiobook, first create a config JSON file using the above template and then instantiate the `m4bmaker` class and call its `convert` method:
 
 ```python
 from pathlib import Path
@@ -86,7 +86,7 @@ m4b = M4BMaker(
 m4b.convert()
 ```
 
-Note that the JSON file is necessary regardless of the operation `mode`, as `M4BMaker` will use it to locate the audio files and transfer metadata. The `tracks` part of the JSON file will only be used in the `json` mode (`single` and `chapter` modes) will ignore it.
+Note that the JSON file is necessary regardless of the operation `mode`, as `m4bmaker` will use it to locate the audio files and transfer metadata. The `tracks` part of the JSON file will only be used in the `json` mode (`single` and `chapter` modes) will ignore it.
 
 ## License
 
