@@ -6,3 +6,6 @@ readme = "README.md"
 requires-python = ">=3.13"
 license = "MIT"
 dependencies = []
+
+[project.scripts]
+m4bmaker = "m4bmaker.cli:cli"
