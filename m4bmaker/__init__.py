@@ -1,3 +1,3 @@
-from m4bmaker.m4bmaker import AudioBook
+from m4bmaker.m4bmaker import M4BMaker
 
-__all__ = ["AudioBook"]
+__all__ = ["M4BMaker"]
