@@ -1,3 +1,4 @@
+import os
 import json
 import shutil
 import subprocess as sp
@@ -13,7 +14,7 @@ from m4bmaker.types import TrackData
 
 class M4BMaker:
     MODES = Enum("Mode", ["json", "single", "chapter"])
-    AUDIO_BITRATES = Enum("AudioBitrate", ["64k", "128k"])
+    AUDIO_BITRATES = Enum("AudioBitrate", ["32k", "64k", "96k", "128k"])
     ILLEGAL_CHARS = r"""<>"|?*'"""
     INPUT_TYPES = [".mp3", ".m4a"]
     OUTPUT_TYPE = ".m4b"
@@ -22,7 +23,7 @@ class M4BMaker:
         self,
         json_path: Path = Path.cwd() / "m4bmaker.json",
         mode: Literal["json", "single", "chapter"] = "json",
-        output_bitrate: Literal["64k", "128k"] = "64k",
+        output_bitrate: Literal["32k", "64k", "96k", "128k"] = "64k",
         log_path: Path = Path.cwd() / "m4bmaker.log",
     ):
         self.lg = logger_factory(log_path=log_path)
@@ -296,7 +297,7 @@ class M4BMaker:
         self.lg.info("Removing temporary files.")
         for track in self.tracks:
             for temp_file in track["temp_files"].values():
-                Path(temp_file).unlink(missing_ok=True)
+                #Path(temp_file).unlink(missing_ok=True)
                 self.lg.debug(f"Temporary file removed: {temp_file}")
 
     def convert(self) -> None:
@@ -317,6 +318,8 @@ class M4BMaker:
         for track in self.tracks:
             self.lg.info(f"Processing {track['track_no']}: {track['title']}")
             track_file = track["file"]
+            if os.path.exists(track_file):
+                continue
             temp_file = track_file.with_stem(track_file.stem + "_t").with_suffix(".mp3")
             track["temp_files"]["temp"] = temp_file
 
