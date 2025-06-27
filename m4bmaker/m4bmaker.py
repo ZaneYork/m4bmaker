@@ -304,7 +304,10 @@ class M4BMaker:
         self.lg.info("Started converting files.")
         self.lg.info(f"mode: {self.mode}, output_bitrate: {self.output_bitrate}")
         common_args = ["-loglevel", "info", "-hide_banner", "-y", "-stats"]
-        codec_args = ["-c" if self._input_format == ".mp3" else "-c:v", "copy"]
+        if self._input_format == ".mp3":
+            codec_args = ["-c", "copy"]
+        else:
+            codec_args = ["-c:v", "copy", "-b:a", self.output_bitrate]
         # if input files are mp3, we just copy all streams to the output file which is
         # faster. If input files are m4a, we need to re-encode the audio stream to aac.
         # Arg "-c:v" is used for video streams, used here because of the cover image.
